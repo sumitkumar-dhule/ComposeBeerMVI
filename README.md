@@ -65,4 +65,3 @@ If you have any feedback or suggestions, please feel free to reach out via GitHu
 
 ---
 
-Feel free to customize this README according to your project's specific details and requirements.
