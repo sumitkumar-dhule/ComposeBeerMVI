@@ -76,8 +76,13 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.coil.compose)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.coil.compose)
+
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    testImplementation(libs.strikt.core)
+    testImplementation (libs.kotlinx.coroutines.test)
 
 }

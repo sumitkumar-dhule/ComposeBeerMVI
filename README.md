@@ -14,6 +14,7 @@ The application demonstrates the following key components and technologies:
 - Jetpack Compose: Modern UI toolkit for building native Android UIs.
 - GSON Converter Factory: JSON serialization/deserialization library for converting Java Objects into JSON and back.
 - Dagger Hilt: Dependency injection library for Android.
+- MockK: Mocking library for Kotlin
 
 ### Project Structure
 
@@ -37,6 +38,10 @@ To run the project locally, follow these steps:
 ### Usage
 
 Upon running the application, you will be presented with the main screen, which displays a list of items fetched from a remote API. You can interact with the UI to navigate between screens, view item details, and handle potential errors gracefully.
+
+###Testing
+
+The project includes unit tests using MockK for mocking dependencies. You can run these tests to ensure the correctness and reliability of the codebase.
 
 ### Additional Notes
 

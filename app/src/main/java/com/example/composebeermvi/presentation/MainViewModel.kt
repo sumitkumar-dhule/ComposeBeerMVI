@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(private val animalRepository: AnimalRepo
         viewModelScope.launch {
             state.value = MainState.Loading
             state.value = try {
-                MainState.Beers(animalRepository.getAnimals())
+                MainState.Animals(animalRepository.getAnimals())
             } catch (exception: Exception) {
                 MainState.Error(exception.localizedMessage)
             }

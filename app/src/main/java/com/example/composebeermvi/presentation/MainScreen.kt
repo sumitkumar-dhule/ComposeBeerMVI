@@ -33,7 +33,7 @@ fun MainScreen(viewModel: MainViewModel, modifier: Modifier = Modifier) {
     when (val state = viewModel.state.value) {
         is Loading -> LoadingScreen()
         is Error -> Toast.makeText(LocalContext.current, state.msg, Toast.LENGTH_SHORT).show()
-        is Beers -> AnimalsList(state.list)
+        is Animals -> AnimalsList(state.list)
     }
 }
 
