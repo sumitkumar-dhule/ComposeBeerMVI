@@ -1,8 +1,8 @@
 package com.example.composebeermvi.presentation
 
 import com.example.composebeermvi.MainDispatcherRule
-import com.example.composebeermvi.domain.AnimalRepository
 import com.example.composebeermvi.domain.model.Animal
+import com.example.composebeermvi.domain.usecase.GetAnimalsUsecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +15,7 @@ import java.io.IOException
 
 class MainViewModelTest {
 
-    private val animalRepository = mockk<AnimalRepository>()
+    private val animalsUsecase = mockk<GetAnimalsUsecase>()
     private val animal = mockk<Animal>()
 
     @ExperimentalCoroutinesApi
@@ -25,9 +25,9 @@ class MainViewModelTest {
     @Test
     fun `when success to get animal list`() = runTest {
         val animals = listOf(animal)
-        coEvery { animalRepository.getAnimals() } returns animals
+        coEvery { animalsUsecase() } returns animals
 
-        val mainViewModel = MainViewModel(animalRepository)
+        val mainViewModel = MainViewModel(animalsUsecase)
 
         expectThat(mainViewModel.state.value).isEqualTo(MainState.Animals(animals))
     }
@@ -35,9 +35,9 @@ class MainViewModelTest {
     @Test
     fun `when fail to get animal list`() = runTest {
         val msg = "msg"
-        coEvery { animalRepository.getAnimals() } throws  IOException(msg)
+        coEvery { animalsUsecase() } throws  IOException(msg)
 
-        val mainViewModel = MainViewModel(animalRepository)
+        val mainViewModel = MainViewModel(animalsUsecase)
 
         expectThat(mainViewModel.state.value).isEqualTo(MainState.Error(msg))
     }

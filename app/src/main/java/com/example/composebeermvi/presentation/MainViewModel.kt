@@ -4,12 +4,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composebeermvi.domain.AnimalRepository
+import com.example.composebeermvi.domain.usecase.GetAnimalsUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val animalRepository: AnimalRepository) :
+class MainViewModel @Inject constructor(private val getAnimalsUsecase: GetAnimalsUsecase) :
     ViewModel() {
 
     var state = mutableStateOf<MainState>(MainState.Loading)
@@ -23,7 +24,7 @@ class MainViewModel @Inject constructor(private val animalRepository: AnimalRepo
         viewModelScope.launch {
             state.value = MainState.Loading
             try {
-                state.value = MainState.Animals(animalRepository.getAnimals())
+                state.value = MainState.Animals(getAnimalsUsecase())
             } catch (exception: Exception) {
                 state.value = MainState.Error(exception.localizedMessage)
             }
