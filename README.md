@@ -39,7 +39,7 @@ To run the project locally, follow these steps:
 
 Upon running the application, you will be presented with the main screen, which displays a list of items fetched from a remote API. You can interact with the UI to navigate between screens, view item details, and handle potential errors gracefully.
 
-###Testing
+### Testing
 
 The project includes unit tests using MockK for mocking dependencies. You can run these tests to ensure the correctness and reliability of the codebase.
 
@@ -49,12 +49,6 @@ The project includes unit tests using MockK for mocking dependencies. You can ru
 - Make sure to provide proper error handling and manage resources efficiently throughout the application.
 - Follow consistent coding conventions and adhere to SOLID principles for better code maintainability.
 - Regularly update dependencies to benefit from the latest features and security patches.
-
-### Acknowledgements
-
-- [JetBrains](https://www.jetbrains.com/) for developing Kotlin.
-- [Square](https://square.github.io/) for creating Retrofit.
-- [Google](https://developer.android.com/) for providing Android development tools and libraries.
 
 ### Author
 

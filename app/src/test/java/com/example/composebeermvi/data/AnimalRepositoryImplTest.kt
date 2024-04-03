@@ -1,6 +1,8 @@
 package com.example.composebeermvi.data
 
 import com.example.composebeermvi.data.dto.AnimalDto
+import com.example.composebeermvi.data.mapper.AnimalMapper
+import com.example.composebeermvi.domain.model.Animal
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -9,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isNotNull
 
 class AnimalRepositoryImplTest {
@@ -19,12 +22,18 @@ class AnimalRepositoryImplTest {
     private lateinit var animalApi: AnimalApi
 
     @MockK
+    private lateinit var mapper: AnimalMapper
+
+    @MockK
     lateinit var animalDto: AnimalDto
+
+    @MockK
+    lateinit var animal: Animal
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        animalRepositoryImpl = AnimalRepositoryImpl(animalApi)
+        animalRepositoryImpl = AnimalRepositoryImpl(animalApi, mapper)
     }
 
     @Test
@@ -34,8 +43,9 @@ class AnimalRepositoryImplTest {
         every { animalDto.name } returns "name"
         every { animalDto.location } returns "location"
         coEvery { animalApi.getAnimals() } returns animalList
+        every { mapper.mapAnimal(animalDto) } returns animal
         val result = animalRepositoryImpl.getAnimals().first()
-        expectThat(result).isNotNull()
+        expectThat(result).isNotNull().isA<Animal>()
     }
 
 }
