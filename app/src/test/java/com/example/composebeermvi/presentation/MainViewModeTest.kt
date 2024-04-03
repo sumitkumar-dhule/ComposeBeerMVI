@@ -1,39 +1,26 @@
 package com.example.composebeermvi.presentation
 
+import com.example.composebeermvi.MainDispatcherRule
 import com.example.composebeermvi.domain.AnimalRepository
 import com.example.composebeermvi.domain.model.Animal
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
-
-@OptIn(ExperimentalCoroutinesApi::class)
+import java.io.IOException
 
 class MainViewModelTest {
 
     private val animalRepository = mockk<AnimalRepository>()
     private val animal = mockk<Animal>()
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-        mainThreadSurrogate.close()
-    }
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     @Test
     fun `when success to get animal list`() = runTest {
@@ -44,4 +31,15 @@ class MainViewModelTest {
 
         expectThat(mainViewModel.state.value).isEqualTo(MainState.Animals(animals))
     }
+
+    @Test
+    fun `when fail to get animal list`() = runTest {
+        val msg = "msg"
+        coEvery { animalRepository.getAnimals() } throws  IOException(msg)
+
+        val mainViewModel = MainViewModel(animalRepository)
+
+        expectThat(mainViewModel.state.value).isEqualTo(MainState.Error(msg))
+    }
+
 }
